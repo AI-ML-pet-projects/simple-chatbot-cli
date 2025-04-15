@@ -142,14 +142,17 @@ def main():
             state.values["messages"].append(HumanMessage(content=user_input))
         
         # Get AI response with config
-        output = app.invoke(state, config=config)
-        state = output  # Update state with the response
+        # output = app.invoke(state, config=config)
+        # state = output  # Update state with the response
         
         # Print the latest AI message
-        latest_message = state["messages"][-1]
-        if isinstance(latest_message, AIMessage):
-            print(f"{Fore.CYAN}Thread ID: {config['configurable']['thread_id']}{Style.RESET_ALL}")
-            print(f"\n{Fore.GREEN}AI: {Style.BRIGHT}{latest_message.content}{Style.RESET_ALL}")
+        # latest_message = state["messages"][-1]
+
+        print(f"{Fore.CYAN}Thread ID: {config['configurable']['thread_id']}{Style.RESET_ALL}\n")
+        print(f"{Fore.GREEN}AI: {Style.BRIGHT}", end="")
+        for chunk, metadata in app.stream({"messages": state["messages"]}, config=config, stream_mode="messages"):
+            if isinstance(chunk, AIMessage):
+                print(f"{chunk.content}", end="", flush=True)
 
 if __name__ == "__main__":
     main()
