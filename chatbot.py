@@ -4,12 +4,12 @@ import uuid
 from typing import List, TypedDict, Annotated
 from colorama import init, Fore, Style
 from langchain.chat_models import init_chat_model
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, trim_messages
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import START, MessagesState, StateGraph
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 
 def setup_environment():
@@ -26,6 +26,15 @@ def initialize_chat():
         temperature=0.7,
         model_provider="openai",
     )
+
+    trimmer = trim_messages(
+      max_tokens=4000,
+      strategy="last",
+      token_counter=llm,
+      include_system=True,
+      allow_partial=False,
+      start_on="human",    
+    )
     
     # Define the workflow
     workflow = StateGraph(state_schema=MessagesState)
@@ -35,9 +44,10 @@ def initialize_chat():
     ])
     # Define the model node
     def call_model(state: MessagesState):
-        prompt = prompt_template.invoke(state)
+        trimmed_messages = trimmer.invoke(state["messages"])
+        prompt = prompt_template.invoke({ "messages": trimmed_messages })
         response = llm.invoke(prompt)
-        return {"messages": response }
+        return {"messages": [response] }
     
     # Add nodes and edges
     workflow.add_edge(START, "model")
