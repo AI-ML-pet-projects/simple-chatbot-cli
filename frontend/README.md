@@ -1,54 +1,142 @@
-# React + TypeScript + Vite
+# Simple Chatbot Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend for the Simple Chatbot application, featuring a clean and intuitive chat interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive chat interface with multiple chat sessions
+- Real-time message streaming with typing indicators
+- Markdown support for rich message formatting
+- Modern UI using Tailwind CSS and shadcn/ui components
+- Responsive design that works on desktop and mobile
+- TypeScript for enhanced code quality and developer experience
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript 5.7
+- Vite 6.2
+- Tailwind CSS 4.1
+- shadcn/ui components
+- Radix UI primitives
+- React Markdown
+- Lucide React icons
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/         # React components
+│   ├── lib/               # Utility functions and configurations
+│   ├── services/          # API services and data fetching
+│   ├── types/             # TypeScript type definitions
+│   ├── assets/            # Static assets
+│   ├── App.tsx            # Main application component
+│   ├── main.tsx           # Application entry point
+│   ├── index.css          # Global styles
+│   └── vite-env.d.ts      # Vite environment type definitions
+├── public/                # Static files
+├── vite.config.ts         # Vite configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+├── postcss.config.js      # PostCSS configuration
+├── tsconfig.json          # TypeScript configuration
+├── tsconfig.node.json     # Node-specific TypeScript config
+├── tsconfig.app.json      # Application-specific TypeScript config
+├── eslint.config.js       # ESLint configuration
+├── components.json        # shadcn/ui configuration
+└── Dockerfile             # Docker configuration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Node.js 18+ and npm
+- Docker (optional, for containerized deployment)
+
+### Local Development
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and visit:
+   ```
+   http://localhost:5173
+   ```
+
+### Docker Development
+
+1. Build and start the frontend container:
+
+   ```bash
+   docker-compose up frontend
+   ```
+
+2. Access the application at:
+   ```
+   http://localhost:5173
+   ```
+
+## Environment Variables
+
+Create a `.env` file in the frontend directory with the following variables:
+
 ```
+VITE_API_URL=http://localhost:8000/api/v1
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Key Dependencies
+
+### Core
+
+- React 19
+- TypeScript 5.7
+- Vite 6.2
+
+### UI Components
+
+- Tailwind CSS 4.1
+- shadcn/ui
+- Radix UI
+- Lucide React icons
+
+### Development Tools
+
+- ESLint 9.21
+- PostCSS 8.5
+- TypeScript ESLint 8.24
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

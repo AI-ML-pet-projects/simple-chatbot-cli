@@ -1,6 +1,6 @@
 import { ChatSession, Message } from "@/types/chat";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const API_URL = "api";
 
 export const createNewChat = async (): Promise<ChatSession> => {
   const response = await fetch(`${API_URL}/chat/new`, {

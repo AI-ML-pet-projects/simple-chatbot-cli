@@ -1,104 +1,147 @@
-# Simple Chatbot
+# Simple Chatbot Backend
 
-A Python-based chatbot using LangChain and OpenAI's GPT models. This chatbot features a colorful CLI interface and conversation memory.
+A FastAPI-based backend for the Simple Chatbot application, powered by LangChain and OpenAI's GPT models.
 
 ## Features
 
-- Interactive command-line interface with colored output
-- Conversation memory for context-aware responses
-- Uses OpenAI's GPT models via LangChain
-- Environment variable support for API keys
+- RESTful API endpoints for chat functionality
+- Conversation memory and session management
+- Integration with OpenAI's GPT models via LangChain
+- Real-time message streaming
 - Docker support for easy deployment
+- Environment variable configuration
 
-## Prerequisites
+## Tech Stack
+
+- FastAPI 0.109.0
+- Uvicorn 0.27.0
+- LangChain 0.1.0
+- LangChain OpenAI 0.0.2
+- LangChain Core 0.1.0
+- LangGraph 0.0.15
+- Pydantic 2.6.0
+- Python 3.8+
+
+## Project Structure
+
+```
+backend/
+├── app/
+│   ├── api/              # API routes and endpoints
+│   ├── services/         # Business logic and services
+│   ├── __init__.py       # Package initialization
+│   └── main.py           # FastAPI application
+├── chatbot.py            # Chatbot implementation
+├── run.py                # Application entry point
+├── requirements.txt      # Python dependencies
+├── Dockerfile            # Docker configuration
+├── .env                  # Environment variables
+└── .env.example          # Example environment variables
+```
+
+## Getting Started
+
+### Prerequisites
 
 - Python 3.8 or higher
 - OpenAI API key
 - Docker (optional, for containerized deployment)
 
-## Local Setup
+### Local Development
 
-1. Clone the repository:
+1. Navigate to the backend directory:
 
-```bash
-git clone <repository-url>
-cd simple_chatbot
-```
+   ```bash
+   cd backend
+   ```
 
 2. Create and activate a virtual environment:
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
 3. Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Set up your OpenAI API key:
-   - Create a `.env` file in the project root
-   - Add your API key: `OPENAI_API_KEY=your-api-key-here`
-   - Or, the chatbot will prompt you for the API key on first run
+4. Set up your environment variables:
 
-## Running the Chatbot
+   - Copy `.env.example` to `.env`
+   - Update the values in `.env` with your configuration
 
-1. Activate your virtual environment (if not already activated):
+5. Run the application:
+   ```bash
+   python run.py
+   ```
 
-```bash
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+### Docker Development
 
-2. Run the chatbot:
+1. Build and start the backend container:
 
-```bash
-python chatbot.py
-```
+   ```bash
+   docker-compose --env-file .env up backend
+   ```
 
-3. Available commands:
-   - Type your message to chat with the AI
-   - Type `clear` to start a new conversation
-   - Type `exit` or `quit` to end the session
+2. The API will be available at:
+   ```
+   http://localhost:8000
+   ```
 
-## Docker Setup
+## API Documentation
 
-1. Build the Docker image:
+The backend provides the following endpoints:
 
-```bash
-docker build -t simple-chatbot .
-```
+- `POST /chat` - Send a message to the chatbot
+- `POST /chat/new` - Create new chat
 
-2. Run the container:
-
-```bash
-docker run -it --env OPENAI_API_KEY=your-api-key-here simple-chatbot
-```
-
-Alternatively, you can use a `.env` file with Docker:
-
-```bash
-docker run -it --env-file .env simple-chatbot
-```
-
-## Project Structure
+API documentation is available at:
 
 ```
-simple_chatbot/
-├── chatbot.py          # Main chatbot implementation
-├── requirements.txt    # Python dependencies
-├── Dockerfile          # Docker configuration
-└── .env                # Environment variables (create this file)
+http://localhost:8000/docs
+```
+
+## Environment Variables
+
+Required environment variables:
+
+```
+OPENAI_API_KEY=your-api-key-here
+LANGSMITH_TRACING=true
+LANGSMITH_ENDPOINT=https://api.smith.langchain.com
+LANGSMITH_API_KEY=your-langsmith-api-key
+LANGSMITH_PROJECT=simple-chatbot
 ```
 
 ## Dependencies
 
-| Package            | Version  |
-| ------------------ | -------- |
-| `langchain`        | >=0.1.0  |
-| `langchain-openai` | >=0.0.2  |
-| `langchain-core`   | >=0.1.0  |
-| `langgraph`        | >=0.2.28 |
-| `python-dotenv`    | >=1.0.0  |
-| `colorama`         | >=0.4.6  |
+### Core
+
+- FastAPI - Web framework
+- Uvicorn - ASGI server
+- LangChain - LLM framework
+- LangChain OpenAI - OpenAI integration
+- LangChain Core - Core LangChain functionality
+- LangGraph - Graph-based conversation management
+
+### Development
+
+- Python-dotenv - Environment variable management
+- Colorama - Terminal color output
+- Pydantic - Data validation
+- Python-multipart - Form data handling
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

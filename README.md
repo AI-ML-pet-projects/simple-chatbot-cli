@@ -1,104 +1,154 @@
 # Simple Chatbot
 
-A Python-based chatbot using LangChain and OpenAI's GPT models. This chatbot features a colorful CLI interface and conversation memory.
+A full-stack chatbot application built with Python (FastAPI) backend and React (Vite) frontend, powered by OpenAI's GPT models through LangChain.
 
 ## Features
 
-- Interactive command-line interface with colored output
-- Conversation memory for context-aware responses
-- Uses OpenAI's GPT models via LangChain
-- Environment variable support for API keys
+- Interactive chat interface with multiple chat sessions
+- Real-time message streaming
+- Conversation history and memory
+- Modern UI with Tailwind CSS
 - Docker support for easy deployment
+- TypeScript support for better code quality
 
 ## Prerequisites
 
-- Python 3.8 or higher
+- Node.js 18+ and npm
+- Python 3.8+
+- Docker and Docker Compose (optional)
 - OpenAI API key
-- Docker (optional, for containerized deployment)
-
-## Local Setup
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd simple_chatbot
-```
-
-2. Create and activate a virtual environment:
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Set up your OpenAI API key:
-   - Create a `.env` file in the project root
-   - Add your API key: `OPENAI_API_KEY=your-api-key-here`
-   - Or, the chatbot will prompt you for the API key on first run
-
-## Running the Chatbot
-
-1. Activate your virtual environment (if not already activated):
-
-```bash
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-2. Run the chatbot:
-
-```bash
-python chatbot.py
-```
-
-3. Available commands:
-   - Type your message to chat with the AI
-   - Type `clear` to start a new conversation
-   - Type `exit` or `quit` to end the session
-
-## Docker Setup
-
-1. Build the Docker image:
-
-```bash
-docker build -t simple-chatbot .
-```
-
-2. Run the container:
-
-```bash
-docker run -it --env OPENAI_API_KEY=your-api-key-here simple-chatbot
-```
-
-Alternatively, you can use a `.env` file with Docker:
-
-```bash
-docker run -it --env-file .env simple-chatbot
-```
 
 ## Project Structure
 
 ```
 simple_chatbot/
-├── chatbot.py          # Main chatbot implementation
-├── requirements.txt    # Python dependencies
-├── Dockerfile          # Docker configuration
-└── .env                # Environment variables (create this file)
+├── backend/               # Python FastAPI backend
+│   ├── main.py           # FastAPI application
+│   ├── chatbot.py        # Chatbot implementation
+│   ├── requirements.txt  # Python dependencies
+│   └── Dockerfile        # Backend Docker configuration
+│
+├── frontend/             # React frontend
+│   ├── src/             # Source files
+│   │   ├── components/  # React components
+│   │   ├── types/       # TypeScript types
+│   │   └── App.tsx      # Main application
+│   ├── package.json     # Node.js dependencies
+│   └── Dockerfile       # Frontend Docker configuration
+│
+├── docker-compose.yml    # Docker Compose configuration
+└── README.md            # Project documentation
 ```
 
-## Dependencies
+## Quick Start
 
-| Package            | Version  |
-| ------------------ | -------- |
-| `langchain`        | >=0.1.0  |
-| `langchain-openai` | >=0.0.2  |
-| `langchain-core`   | >=0.1.0  |
-| `langgraph`        | >=0.2.28 |
-| `python-dotenv`    | >=1.0.0  |
-| `colorama`         | >=0.4.6  |
+### Using Docker (Recommended)
+
+1. Create a `.env` file in the root directory:
+
+   ```
+   OPENAI_API_KEY=your-api-key-here
+   VITE_API_URL=http://backend:8000/api/v1
+   ```
+
+2. Start the application:
+
+   ```bash
+   docker-compose --env-file .env up -d
+   ```
+
+3. Access the application:
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000
+
+### Local Development
+
+#### Backend Setup
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd backend
+   ```
+
+2. Create a virtual environment and activate it:
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set your OpenAI API key:
+
+   ```bash
+   export OPENAI_API_KEY=your-api-key-here
+   ```
+
+5. Start the backend server:
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+#### Frontend Setup
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## API Documentation
+
+The backend API provides the following endpoints:
+
+- `POST /chat`: Send a message to the chatbot
+- `POST /chat/new`: Create new chat
+
+## Development
+
+### Backend
+
+The backend is built with FastAPI and uses LangChain for the chatbot implementation. Key features include:
+
+- Conversation memory
+- Message streaming
+- Session management
+- Error handling
+
+### Frontend
+
+The frontend is built with React and Vite, using TypeScript for type safety. Key features include:
+
+- Multiple chat sessions
+- Real-time message updates
+- Modern UI with Tailwind CSS
+- Responsive design
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

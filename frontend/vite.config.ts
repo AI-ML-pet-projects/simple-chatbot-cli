@@ -13,10 +13,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/v1": {
-        target: "http://localhost:8000",
+      "/api": {
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
